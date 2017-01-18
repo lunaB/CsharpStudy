@@ -57,35 +57,9 @@ namespace 지뢰찾기
         {
             dataGridView1[e.ColumnIndex, e.RowIndex].Style.BackColor = Color.Blue;
             paint(e.ColumnIndex, e.RowIndex);
-            MessageBox.Show(i+"");
         }
-        int i = 0;
         private void paint(int col, int row)
         {
-
-            dataGridView1[col, row].Style.BackColor = safeColor;
-            i++;
-            //왼
-            if (col != 0 && dataGridView1[col - 1, row].Style.BackColor == defColor)
-            {
-                paint(col - 1, row);
-            }
-            //위
-            if (row != 0 && dataGridView1[col, row - 1].Style.BackColor == defColor)
-            {
-                paint(col, row - 1);
-            }
-            //오
-            if (col != colCnt - 1 && dataGridView1[col + 1, row].Style.BackColor == defColor)
-            {
-                paint(col + 1, row);
-            }
-            //아
-            if (row != rowCnt - 1 && dataGridView1[col, row + 1].Style.BackColor == defColor)
-            {
-                paint(col, row + 1);
-            }
-
             //개수 검사
             int war = 0;
             if (col != 0 && row != 0 && dataGridView1[col - 1, row - 1].Style.BackColor == Color.LawnGreen) war++;
@@ -99,7 +73,32 @@ namespace 지뢰찾기
             if (row != rowCnt - 1 && dataGridView1[col, row + 1].Style.BackColor == Color.LawnGreen) war++;
 
             dataGridView1[col, row].Value = war;
+            dataGridView1[col, row].Style.BackColor = safeColor;
 
+            if (dataGridView1[col, row].Value.ToString() == "0")
+            {
+                //왼
+                if (col != 0 && dataGridView1[col - 1, row].Style.BackColor == defColor)
+                {
+                    paint(col - 1, row);
+                }
+                //위
+                if (row != 0 && dataGridView1[col, row - 1].Style.BackColor == defColor)
+                {
+                    paint(col, row - 1);
+                }
+                //오
+                if (col != colCnt - 1 && dataGridView1[col + 1, row].Style.BackColor == defColor)
+                {
+                    paint(col + 1, row);
+                }
+                //아
+                if (row != rowCnt - 1 && dataGridView1[col, row + 1].Style.BackColor == defColor)
+                {
+                    paint(col, row + 1);
+                }
+
+            }
         }
 
         private void dataGridView1_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
