@@ -7,3 +7,12 @@ C:\Users\Administrator\Desktop\지뢰찾기\지뢰찾기\obj\Debug\지뢰찾기.
 C:\Users\Administrator\Desktop\지뢰찾기\지뢰찾기\obj\Debug\지뢰찾기.csproj.GenerateResource.Cache
 C:\Users\Administrator\Desktop\지뢰찾기\지뢰찾기\obj\Debug\지뢰찾기.exe
 C:\Users\Administrator\Desktop\지뢰찾기\지뢰찾기\obj\Debug\지뢰찾기.pdb
+C:\Users\Administrator\Desktop\진행프로젝트\지뢰찾기\지뢰찾기\bin\Debug\지뢰찾기.exe.config
+C:\Users\Administrator\Desktop\진행프로젝트\지뢰찾기\지뢰찾기\obj\Debug\지뢰찾기.exe
+C:\Users\Administrator\Desktop\진행프로젝트\지뢰찾기\지뢰찾기\obj\Debug\지뢰찾기.pdb
+C:\Users\Administrator\Desktop\진행프로젝트\지뢰찾기\지뢰찾기\bin\Debug\지뢰찾기.exe
+C:\Users\Administrator\Desktop\진행프로젝트\지뢰찾기\지뢰찾기\bin\Debug\지뢰찾기.pdb
+C:\Users\Administrator\Desktop\진행프로젝트\지뢰찾기\지뢰찾기\obj\Debug\지뢰찾기.csprojResolveAssemblyReference.cache
+C:\Users\Administrator\Desktop\진행프로젝트\지뢰찾기\지뢰찾기\obj\Debug\지뢰찾기.Form1.resources
+C:\Users\Administrator\Desktop\진행프로젝트\지뢰찾기\지뢰찾기\obj\Debug\지뢰찾기.Properties.Resources.resources
+C:\Users\Administrator\Desktop\진행프로젝트\지뢰찾기\지뢰찾기\obj\Debug\지뢰찾기.csproj.GenerateResource.Cache
