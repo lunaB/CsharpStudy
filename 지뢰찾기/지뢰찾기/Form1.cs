@@ -22,10 +22,12 @@ namespace 지뢰찾기
             InitializeComponent();
         }
 
-        int cellWH = 20;
+        int cellWH = 25;
 
-        int colCnt = 20;
-        int rowCnt = 20;
+        int colCnt = 10;
+        int rowCnt = 10;
+
+        int mineNum = 1;
 
         Color defColor = Color.Empty;
         Color safeColor = Color.LightGray;
@@ -53,7 +55,7 @@ namespace 지뢰찾기
             dataGridView1.AllowUserToResizeColumns = false;
             dataGridView1.AllowUserToResizeRows = false;
 
-            swapMine(90); // 지뢰 갯수
+            swapMine(); // 지뢰 갯수
         }
 
         private void dataGridView1_SelectionChanged(object sender, EventArgs e)
@@ -69,11 +71,24 @@ namespace 지뢰찾기
                     for(int j = 0; j < rowCnt; j++)
                         if(dataGridView1[i, j].Style.BackColor == warColor)
                             dataGridView1[i, j].Style.BackColor = Color.Red;
-
                 MessageBox.Show("Gaem Over");
             }
             else {
                 paint(e.ColumnIndex, e.RowIndex);
+                for(int i = 0; i < colCnt; i++)
+                    for(int j = 0; j < rowCnt; j++)
+                        if (dataGridView1[i, j].Style.BackColor == defColor)
+                            return;
+
+
+                MessageBox.Show("승리!");
+                if (MessageBox.Show("재도전 하시겠습니까?", "지뢰찾기#영채", MessageBoxButtons.OKCancel) == DialogResult.OK)
+                {
+                    reset();
+                }
+                else {
+                    Application.Exit();
+                }
             }
         }
 
@@ -81,11 +96,14 @@ namespace 지뢰찾기
         {
             //개수 검사
             int war = 0;
+            
+            //대각
             if (col != 0 && row != 0 && dataGridView1[col - 1, row - 1].Style.BackColor == warColor) war++;
             if (col != 0 && row != rowCnt - 1 && dataGridView1[col - 1, row + 1].Style.BackColor == warColor) war++;
             if (col != colCnt - 1 && row != 0 && dataGridView1[col + 1, row - 1].Style.BackColor == warColor) war++;
             if (col != colCnt - 1 && row != rowCnt - 1 && dataGridView1[col + 1, row + 1].Style.BackColor == warColor) war++;
 
+            //십자
             if (col != 0 && dataGridView1[col - 1, row].Style.BackColor == warColor) war++;
             if (row != 0 && dataGridView1[col, row - 1].Style.BackColor == warColor) war++;
             if (col != colCnt - 1 && dataGridView1[col + 1, row].Style.BackColor == warColor) war++;
@@ -94,7 +112,7 @@ namespace 지뢰찾기
             dataGridView1[col, row].Value = war;
             dataGridView1[col, row].Style.BackColor = safeColor;
 
-            if (dataGridView1[col, row].Value.ToString() == "0")
+            if (dataGridView1[col, row].Value.ToString().Equals("0"))
             {
                 if (col != 0 && dataGridView1[col - 1, row].Style.BackColor == defColor) paint(col - 1, row);           //left
                 if (row != 0 && dataGridView1[col, row - 1].Style.BackColor == defColor) paint(col, row - 1);           //up
@@ -103,7 +121,7 @@ namespace 지뢰찾기
             }
         }
 
-        void swapMine(int mineNum)
+        void swapMine()
         {
             Random rand = new Random(System.DateTime.Now.Ticks.GetHashCode()); //거의 완벽한 난수 발생이 가능한 시드라고 배움
             for(int i = 0; i < mineNum; i++)
@@ -116,11 +134,10 @@ namespace 지뢰찾기
                     continue;
                 }
                 dataGridView1[cTmp, rTmp].Style.BackColor = warColor;
-                
             }
         }
         
-        //test
+        //c
         private void dataGridView1_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
@@ -129,12 +146,25 @@ namespace 지뢰찾기
                 {
                     dataGridView1[e.ColumnIndex, e.RowIndex].Value = "";
                 }
-                else if (dataGridView1[e.ColumnIndex, e.RowIndex].Value == null)
+                else if (dataGridView1[e.ColumnIndex, e.RowIndex].Value == null ||  dataGridView1[e.ColumnIndex, e.RowIndex].Value.ToString().Equals(""))
                 {
                     dataGridView1[e.ColumnIndex, e.RowIndex].Value = "X";
                 }
-                //dataGridView1[e.ColumnIndex, e.RowIndex].Style.BackColor = warColor;
             }
+        }
+
+        //reset
+        private void reset()
+        {
+            for (int i = 0; i < colCnt; i++)
+            {
+                for (int j = 0; j < rowCnt; j++)
+                {
+                    dataGridView1[i, j].Style.BackColor = defColor;
+                    dataGridView1[i, j].Value = "";
+                }
+            }
+            swapMine();
         }
     }
 }
