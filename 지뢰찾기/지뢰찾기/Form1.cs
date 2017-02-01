@@ -24,10 +24,10 @@ namespace 지뢰찾기
 
         int cellWH = 25;
 
-        int colCnt = 10;
-        int rowCnt = 10;
+        int colCnt = 20;
+        int rowCnt = 20;
 
-        int mineNum = 1;
+        int mineNum = 50;
 
         Color defColor = Color.Empty;
         Color safeColor = Color.LightGray;
@@ -79,47 +79,71 @@ namespace 지뢰찾기
                     for(int j = 0; j < rowCnt; j++)
                         if (dataGridView1[i, j].Style.BackColor == defColor)
                             return;
-
-
+                //남은블럭이 없을경우
                 MessageBox.Show("승리!");
-                if (MessageBox.Show("재도전 하시겠습니까?", "지뢰찾기#영채", MessageBoxButtons.OKCancel) == DialogResult.OK)
-                {
-                    reset();
-                }
-                else {
-                    Application.Exit();
-                }
+                
+            }
+            
+            if (MessageBox.Show("재도전 하시겠습니까?", "지뢰찾기#영채", MessageBoxButtons.OKCancel) == DialogResult.OK)
+            {
+                reset();
+            }
+            else {
+                Application.Exit();
             }
         }
 
         private void paint(int col, int row)
         {
+            //Delay(300);
             //개수 검사
             int war = 0;
             
+            /*지뢰수 체크*/
             //대각
-            if (col != 0 && row != 0 && dataGridView1[col - 1, row - 1].Style.BackColor == warColor) war++;
-            if (col != 0 && row != rowCnt - 1 && dataGridView1[col - 1, row + 1].Style.BackColor == warColor) war++;
-            if (col != colCnt - 1 && row != 0 && dataGridView1[col + 1, row - 1].Style.BackColor == warColor) war++;
-            if (col != colCnt - 1 && row != rowCnt - 1 && dataGridView1[col + 1, row + 1].Style.BackColor == warColor) war++;
-
+            if (col != 0 && row != 0 && dataGridView1[col - 1, row - 1].Style.BackColor == warColor) war++; 
+            if (col != 0 && row != rowCnt - 1 && dataGridView1[col - 1, row + 1].Style.BackColor == warColor) war++; 
+            if (col != colCnt - 1 && row != 0 && dataGridView1[col + 1, row - 1].Style.BackColor == warColor) war++; 
+            if (col != colCnt - 1 && row != rowCnt - 1 && dataGridView1[col + 1, row + 1].Style.BackColor == warColor) war++; 
             //십자
-            if (col != 0 && dataGridView1[col - 1, row].Style.BackColor == warColor) war++;
-            if (row != 0 && dataGridView1[col, row - 1].Style.BackColor == warColor) war++;
-            if (col != colCnt - 1 && dataGridView1[col + 1, row].Style.BackColor == warColor) war++;
-            if (row != rowCnt - 1 && dataGridView1[col, row + 1].Style.BackColor == warColor) war++;
+            if (col != 0 && dataGridView1[col - 1, row].Style.BackColor == warColor) war++; //left
+            if (row != 0 && dataGridView1[col, row - 1].Style.BackColor == warColor) war++; //up
+            if (col != colCnt - 1 && dataGridView1[col + 1, row].Style.BackColor == warColor) war++; //right
+            if (row != rowCnt - 1 && dataGridView1[col, row + 1].Style.BackColor == warColor) war++; //down
 
-            dataGridView1[col, row].Value = war;
+            dataGridView1[col, row].Value = (war==0 ? "" : war.ToString());
             dataGridView1[col, row].Style.BackColor = safeColor;
-
-            if (dataGridView1[col, row].Value.ToString().Equals("0"))
+            
+            //이동
+            if (dataGridView1[col, row].Value.ToString().Equals(""))
             {
-                if (col != 0 && dataGridView1[col - 1, row].Style.BackColor == defColor) paint(col - 1, row);           //left
-                if (row != 0 && dataGridView1[col, row - 1].Style.BackColor == defColor) paint(col, row - 1);           //up
-                if (col != colCnt - 1 && dataGridView1[col + 1, row].Style.BackColor == defColor) paint(col + 1, row);  //right
-                if (row != rowCnt - 1 && dataGridView1[col, row + 1].Style.BackColor == defColor) paint(col, row + 1);  //down
+                if (col != 0 && dataGridView1[col - 1, row].Style.BackColor == defColor) paint(col - 1, row);                                       //left
+                if (col != 0 && row != 0 && dataGridView1[col - 1, row - 1].Style.BackColor == defColor) paint(col - 1, row - 1);                   //left up
+                if (row != 0 && dataGridView1[col, row - 1].Style.BackColor == defColor) paint(col, row - 1);                                       //up
+                if (col != colCnt - 1 && row != 0 && dataGridView1[col + 1, row - 1].Style.BackColor == defColor) paint(col + 1, row - 1);          //up right
+                if (col != colCnt - 1 && dataGridView1[col + 1, row].Style.BackColor == defColor) paint(col + 1, row);                              //right
+                if (col != colCnt - 1 && row != rowCnt - 1 && dataGridView1[col + 1, row + 1].Style.BackColor == defColor) paint(col + 1, row + 1); //right down
+                if (row != rowCnt - 1 && dataGridView1[col, row + 1].Style.BackColor == defColor) paint(col, row + 1);                              //down
+                if (col != 0 && row != rowCnt - 1 && dataGridView1[col - 1, row + 1].Style.BackColor == defColor) paint(col - 1, row + 1);          //down left
             }
+            
         }
+
+        //test
+        /*
+        private static DateTime Delay(int MS)
+        {
+            DateTime ThisMoment = DateTime.Now;
+            TimeSpan duration = new TimeSpan(0, 0, 0, 0, MS);
+            DateTime AfterWards = ThisMoment.Add(duration);
+            while (AfterWards >= ThisMoment)
+            {
+                System.Windows.Forms.Application.DoEvents();
+                ThisMoment = DateTime.Now;
+            }
+            return DateTime.Now;
+        }
+        */
 
         void swapMine()
         {
@@ -137,7 +161,6 @@ namespace 지뢰찾기
             }
         }
         
-        //c
         private void dataGridView1_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
