@@ -115,7 +115,7 @@ namespace 지뢰찾기
             dataGridView1[col, row].Style.BackColor = safeColor;
             
             //이동
-            if (dataGridView1[col, row].Value.ToString().Equals(""))
+            if (war == 0)
             {
                 if (col != 0 && dataGridView1[col - 1, row].Style.BackColor == defColor) paint(col - 1, row);                                       //left
                 if (col != 0 && row != 0 && dataGridView1[col - 1, row - 1].Style.BackColor == defColor) paint(col - 1, row - 1);                   //left up
